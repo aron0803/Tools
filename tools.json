@@ -1,0 +1,13 @@
+{
+  "siteName": "Ron小工具",
+  "siteDescription": "實用的小工具集合，免費下載使用",
+  "author": "Ron",
+  "tools": {
+    "ScreenRecorder": {
+      "name": "螢幕錄影工具",
+      "description": "輕量級螢幕錄影程式，支援全螢幕/視窗錄製、截圖、音訊錄製，快捷鍵操作。",
+      "version": "1.0.0",
+      "category": "多媒體"
+    }
+  }
+}
