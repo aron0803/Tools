@@ -1,5 +1,6 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,20 +9,22 @@
     <title>Ron小工具 - 免費工具下載</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #6366f1;
-            --primary-dark: #4f46e5;
-            --secondary: #8b5cf6;
-            --accent: #06b6d4;
-            --bg-dark: #0f172a;
-            --bg-card: #1e293b;
-            --bg-card-hover: #334155;
-            --text-primary: #f1f5f9;
-            --text-secondary: #94a3b8;
-            --border: #334155;
-            --success: #22c55e;
+            /* VS Code Dark Theme Colors */
+            --bg-primary: #1e1e1e;
+            --bg-secondary: #252526;
+            --bg-tertiary: #2d2d2d;
+            --bg-hover: #3c3c3c;
+            --border: #3c3c3c;
+            --text-primary: #cccccc;
+            --text-secondary: #858585;
+            --accent: #0e639c;
+            --accent-hover: #1177bb;
+            --link: #3794ff;
+            --success: #4ec9b0;
+            --tag-bg: #264f78;
         }
 
         * {
@@ -31,258 +34,225 @@
         }
 
         body {
-            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: var(--bg-dark);
+            font-family: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
             color: var(--text-primary);
             min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        /* Animated Background */
-        .bg-gradient {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 80% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 50%, rgba(6, 182, 212, 0.1) 0%, transparent 70%);
-            z-index: -1;
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.7; }
+            line-height: 1.5;
+            font-size: 14px;
         }
 
         /* Header */
         header {
-            text-align: center;
-            padding: 4rem 2rem 3rem;
-            position: relative;
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border);
+            padding: 1.5rem 2rem;
+        }
+
+        .header-content {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .logo {
-            font-size: 3.5rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 1rem;
-            animation: glow 3s ease-in-out infinite;
-        }
-
-        @keyframes glow {
-            0%, 100% { filter: drop-shadow(0 0 20px rgba(99, 102, 241, 0.5)); }
-            50% { filter: drop-shadow(0 0 40px rgba(139, 92, 246, 0.8)); }
-        }
-
-        .tagline {
             font-size: 1.25rem;
-            color: var(--text-secondary);
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Stats Bar */
-        .stats-bar {
+            font-weight: 600;
+            color: var(--text-primary);
             display: flex;
-            justify-content: center;
-            gap: 3rem;
-            padding: 1.5rem;
-            margin: 2rem auto;
-            max-width: 600px;
-            background: var(--bg-card);
-            border-radius: 1rem;
-            border: 1px solid var(--border);
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .stat-item {
-            text-align: center;
+        .logo span {
+            color: var(--success);
         }
 
-        .stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--accent);
-        }
-
-        .stat-label {
-            font-size: 0.875rem;
+        .github-link {
             color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: color 0.2s;
         }
 
-        /* Main Content */
+        .github-link:hover {
+            color: var(--link);
+        }
+
+        .github-link svg {
+            width: 18px;
+            height: 18px;
+        }
+
+        /* Main */
         main {
-            max-width: 1200px;
+            max-width: 1000px;
             margin: 0 auto;
             padding: 2rem;
         }
 
-        .section-title {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 2rem;
+        .section-header {
             display: flex;
             align-items: center;
-            gap: 0.75rem;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border);
         }
 
-        .section-title::before {
-            content: '';
-            width: 4px;
-            height: 1.5rem;
-            background: linear-gradient(to bottom, var(--primary), var(--secondary));
-            border-radius: 2px;
+        .section-title {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        /* Tool Cards Grid */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 1.5rem;
+        .tool-count {
+            font-size: 12px;
+            color: var(--text-secondary);
+            background: var(--bg-tertiary);
+            padding: 2px 8px;
+            border-radius: 10px;
         }
 
-        .tool-card {
-            background: var(--bg-card);
-            border-radius: 1rem;
+        /* Tool List */
+        .tools-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+            background: var(--border);
             border: 1px solid var(--border);
-            padding: 1.5rem;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
+            border-radius: 6px;
             overflow: hidden;
         }
 
-        .tool-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
-            opacity: 0;
-            transition: opacity 0.3s;
+        .tool-item {
+            background: var(--bg-secondary);
+            padding: 1rem 1.25rem;
+            display: grid;
+            grid-template-columns: 40px 1fr auto;
+            gap: 1rem;
+            align-items: center;
+            transition: background 0.15s;
         }
 
-        .tool-card:hover {
-            transform: translateY(-4px);
-            background: var(--bg-card-hover);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-
-        .tool-card:hover::before {
-            opacity: 1;
-        }
-
-        .tool-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 1rem;
+        .tool-item:hover {
+            background: var(--bg-hover);
         }
 
         .tool-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-radius: 12px;
+            width: 40px;
+            height: 40px;
+            background: var(--bg-tertiary);
+            border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 1.5rem;
+            font-size: 1.25rem;
         }
 
-        .tool-category {
-            font-size: 0.75rem;
-            padding: 0.25rem 0.75rem;
-            background: rgba(99, 102, 241, 0.2);
-            color: var(--primary);
-            border-radius: 9999px;
-            font-weight: 500;
+        .tool-info {
+            min-width: 0;
         }
 
         .tool-name {
-            font-size: 1.25rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tool-version {
+            font-size: 11px;
+            color: var(--success);
+            background: rgba(78, 201, 176, 0.15);
+            padding: 1px 6px;
+            border-radius: 3px;
         }
 
         .tool-description {
+            font-size: 13px;
             color: var(--text-secondary);
-            font-size: 0.9rem;
-            margin-bottom: 1rem;
-            line-height: 1.7;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .tool-meta {
             display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-bottom: 1.25rem;
-            font-size: 0.85rem;
-            color: var(--text-secondary);
-        }
-
-        .tool-meta-item {
-            display: flex;
             align-items: center;
-            gap: 0.375rem;
+            gap: 1rem;
+            flex-shrink: 0;
         }
 
-        .tool-meta-item svg {
-            width: 16px;
-            height: 16px;
-            opacity: 0.7;
+        .tool-size {
+            font-size: 12px;
+            color: var(--text-secondary);
+            min-width: 70px;
+            text-align: right;
+        }
+
+        .tool-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+            min-width: 85px;
         }
 
         .download-btn {
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            width: 100%;
-            padding: 0.875rem 1.5rem;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--accent);
             color: white;
             border: none;
-            border-radius: 0.75rem;
-            font-size: 1rem;
-            font-weight: 600;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 500;
             cursor: pointer;
-            transition: all 0.3s;
             text-decoration: none;
+            transition: background 0.15s;
         }
 
         .download-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
-        }
-
-        .download-btn:active {
-            transform: scale(0.98);
+            background: var(--accent-hover);
         }
 
         .download-btn svg {
-            width: 20px;
-            height: 20px;
+            width: 14px;
+            height: 14px;
+        }
+
+        /* Category Tag */
+        .tool-category {
+            font-size: 11px;
+            color: var(--text-primary);
+            background: var(--tag-bg);
+            padding: 2px 8px;
+            border-radius: 3px;
         }
 
         /* Footer */
         footer {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
             text-align: center;
-            padding: 3rem 2rem;
             color: var(--text-secondary);
-            font-size: 0.9rem;
+            font-size: 12px;
         }
 
         footer a {
-            color: var(--accent);
+            color: var(--link);
             text-decoration: none;
         }
 
@@ -293,77 +263,74 @@
         /* Empty State */
         .empty-state {
             text-align: center;
-            padding: 4rem 2rem;
+            padding: 3rem;
             color: var(--text-secondary);
-        }
-
-        .empty-state svg {
-            width: 80px;
-            height: 80px;
-            margin-bottom: 1rem;
-            opacity: 0.5;
         }
 
         /* Responsive */
         @media (max-width: 768px) {
-            .logo {
-                font-size: 2.5rem;
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
             }
 
-            .tagline {
-                font-size: 1rem;
-            }
-
-            .stats-bar {
-                gap: 1.5rem;
-                flex-wrap: wrap;
-            }
-
-            .tools-grid {
+            .tool-item {
                 grid-template-columns: 1fr;
+                gap: 0.75rem;
             }
 
-            .tool-card {
-                padding: 1.25rem;
+            .tool-icon {
+                display: none;
+            }
+
+            .tool-meta {
+                justify-content: flex-start;
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .tool-description {
+                white-space: normal;
             }
         }
     </style>
 </head>
-<body>
-    <div class="bg-gradient"></div>
 
+<body>
     <header>
-        <h1 class="logo">🛠️ Ron小工具</h1>
-        <p class="tagline">實用的小工具集合，免費下載使用</p>
-        
-        <div class="stats-bar">
-            <div class="stat-item">
-                <div class="stat-value" id="tool-count">0</div>
-                <div class="stat-label">工具數量</div>
-            </div>
-            <div class="stat-item">
-                <div class="stat-value" id="last-update">-</div>
-                <div class="stat-label">最後更新</div>
-            </div>
+        <div class="header-content">
+            <h1 class="logo">
+                <span>⚡</span> Ron小工具
+            </h1>
+            <a href="https://github.com/aron0803/Tools" target="_blank" class="github-link">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path
+                        d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
+                </svg>
+                GitHub
+            </a>
         </div>
     </header>
 
     <main>
-        <h2 class="section-title">可用工具</h2>
-        <div class="tools-grid" id="tools-container">
+        <div class="section-header">
+            <span class="section-title">可下載的工具</span>
+            <span class="tool-count" id="tool-count">0 個工具</span>
+        </div>
+
+        <div class="tools-list" id="tools-container">
             <!-- Tools will be dynamically inserted here -->
         </div>
     </main>
 
     <footer>
-        <p>© 2025 Ron小工具 | 
-            <a href="https://github.com/aron0803/Tools" target="_blank">GitHub</a>
-        </p>
+        <p>© 2025 Ron小工具 · <a href="https://github.com/aron0803/Tools" target="_blank">View on GitHub</a></p>
     </footer>
 
     <script>
         // Tool data will be injected by publish script
-        const toolsData = [{"fileSize":154185,"version":"2025.12.05.1130","updateDate":"2025-12-05","category":"Other","fileName":"DontSleep_v2025.12.05.zip","name":"DontSleep_v2025.12.05","description":"Tool program","downloadUrl":"https://github.com/aron0803/Tools/releases/download/v2025.12.05.1130/DontSleep_v2025.12.05.zip"},{"fileSize":386204,"version":"1.0.0","updateDate":"2025-12-05","category":"多媒體","fileName":"ScreenRecorder.zip","name":"螢幕錄影工具","description":"輕量級螢幕錄影程式，支援全螢幕/視窗錄製、截圖、音訊錄製，快捷鍵操作。","downloadUrl":"https://github.com/aron0803/Tools/releases/download/v2025.12.05.1130/ScreenRecorder.zip"}];
+        const toolsData = [{"fileSize":154185,"version":"2025.12.05.1133","updateDate":"2025-12-05","category":"Other","fileName":"DontSleep_v2025.12.05.zip","name":"DontSleep_v2025.12.05","description":"Tool program","downloadUrl":"https://github.com/aron0803/Tools/releases/download/v2025.12.05.1133/DontSleep_v2025.12.05.zip"},{"fileSize":386204,"version":"1.0.0","updateDate":"2025-12-05","category":"多媒體","fileName":"ScreenRecorder.zip","name":"螢幕錄影工具","description":"輕量級螢幕錄影程式，支援全螢幕/視窗錄製、截圖、音訊錄製，快捷鍵操作。","downloadUrl":"https://github.com/aron0803/Tools/releases/download/v2025.12.05.1133/ScreenRecorder.zip"}];
 
         // Category icons mapping
         const categoryIcons = {
@@ -375,87 +342,57 @@
         };
 
         function formatFileSize(bytes) {
-            if (bytes === 0) return '0 Bytes';
+            if (bytes === 0) return '0 B';
             const k = 1024;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const sizes = ['B', 'KB', 'MB', 'GB'];
             const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
         }
 
         function formatDate(dateString) {
             const date = new Date(dateString);
-            return date.toLocaleDateString('zh-TW', {
-                year: 'numeric',
-                month: '2-digit',
-                day: '2-digit'
-            });
+            return date.toLocaleDateString('zh-TW');
         }
 
         function renderTools() {
             const container = document.getElementById('tools-container');
             const toolCount = document.getElementById('tool-count');
-            const lastUpdate = document.getElementById('last-update');
 
             if (toolsData.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4" />
-                        </svg>
-                        <h3>目前沒有可用的工具</h3>
-                        <p>請稍後再來查看</p>
-                    </div>
-                `;
+                container.innerHTML = '<div class="empty-state">目前沒有可用的工具</div>';
+                toolCount.textContent = '0 個工具';
                 return;
             }
 
-            toolCount.textContent = toolsData.length;
-            
-            // Find the latest update date
-            const dates = toolsData.map(t => new Date(t.updateDate));
-            const latestDate = new Date(Math.max(...dates));
-            lastUpdate.textContent = formatDate(latestDate);
+            toolCount.textContent = toolsData.length + ' 個工具';
 
             container.innerHTML = toolsData.map(tool => `
-                <div class="tool-card">
-                    <div class="tool-header">
-                        <div class="tool-icon">${categoryIcons[tool.category] || '📦'}</div>
-                        <span class="tool-category">${tool.category}</span>
+                <div class="tool-item">
+                    <div class="tool-icon">${categoryIcons[tool.category] || '📦'}</div>
+                    <div class="tool-info">
+                        <div class="tool-name">
+                            ${tool.name}
+                            <span class="tool-version">v${tool.version}</span>
+                            <span class="tool-category">${tool.category}</span>
+                        </div>
+                        <div class="tool-description">${tool.description}</div>
                     </div>
-                    <h3 class="tool-name">${tool.name}</h3>
-                    <p class="tool-description">${tool.description}</p>
                     <div class="tool-meta">
-                        <span class="tool-meta-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                        <span class="tool-size">${formatFileSize(tool.fileSize)}</span>
+                        <span class="tool-date">${formatDate(tool.updateDate)}</span>
+                        <a href="${tool.downloadUrl}" class="download-btn" download>
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                             </svg>
-                            v${tool.version}
-                        </span>
-                        <span class="tool-meta-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
-                            </svg>
-                            ${formatFileSize(tool.fileSize)}
-                        </span>
-                        <span class="tool-meta-item">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                            </svg>
-                            ${formatDate(tool.updateDate)}
-                        </span>
+                            下載
+                        </a>
                     </div>
-                    <a href="${tool.downloadUrl}" class="download-btn" download>
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                        下載
-                    </a>
                 </div>
             `).join('');
         }
 
-        // Initialize
         document.addEventListener('DOMContentLoaded', renderTools);
     </script>
 </body>
+
 </html>
