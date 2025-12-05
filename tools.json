@@ -11,7 +11,7 @@
     },
     "DontSleep": {
       "name": "防止睡眠工具",
-      "description": "防止電腦進入睡眠模式，可保持螢幕常亮、模擬按鍵讓 Teams 等應用保持活躍，支援開機自動啟動與系統匣最小化。",
+      "description": "防止電腦進入睡眠及解決 AnyDesk Shift 鍵卡住的小工具",
       "version": "1.0.0",
       "category": "系統工具"
     }
