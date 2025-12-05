@@ -3,9 +3,9 @@
     Ron Tools - Auto Publish Script
 .DESCRIPTION
     1. Scan File directory for .zip files
-    2. Create/Update GitHub Release and upload files
-    3. Generate index.html download page
-    4. Push to GitHub
+    2. Push to GitHub first
+    3. Create/Update GitHub Release and upload files
+    4. Generate index.html download page
 #>
 
 param(
@@ -73,7 +73,7 @@ if ($hasGhCli) {
     Write-OK "GitHub CLI installed"
     
     # Check if logged in
-    $authStatus = gh auth status 2>&1
+    $null = gh auth status 2>&1
     if ($LASTEXITCODE -eq 0) {
         Write-OK "GitHub CLI logged in"
     }
@@ -111,13 +111,7 @@ foreach ($file in $zipFiles) {
 # Step 3: Read tool config
 Write-Step "3/7" "Reading tool config..."
 
-$toolsConfig = @{
-    siteName        = "Ron Tools"
-    siteDescription = "Useful tools collection"
-    author          = "Ron"
-    tools           = @{}
-}
-
+$toolsConfig = $null
 if (Test-Path $ToolsJsonPath) {
     try {
         $jsonContent = Get-Content $ToolsJsonPath -Raw -Encoding UTF8
@@ -133,62 +127,15 @@ if (Test-Path $ToolsJsonPath) {
 Write-Step "4/7" "Preparing release..."
 
 if ([string]::IsNullOrEmpty($Version)) {
-    $Version = Get-Date -Format "yyyy.MM.dd"
+    $Version = Get-Date -Format "yyyy.MM.dd.HHmm"
 }
 $TagName = "v$Version"
 
 Write-Info "Version: $Version"
 Write-Info "Tag: $TagName"
 
-# Step 5: Create/Update GitHub Release
-if (-not $SkipRelease -and $hasGhCli) {
-    Write-Step "5/7" "Uploading to GitHub Release..."
-    
-    # Check if Release exists
-    $releaseExists = gh release view $TagName 2>&1
-    
-    if ($LASTEXITCODE -eq 0) {
-        Write-Info "Release $TagName exists, updating files..."
-        
-        # Delete old assets
-        foreach ($file in $zipFiles) {
-            gh release delete-asset $TagName $file.Name --yes 2>$null
-        }
-        
-        # Upload new files
-        foreach ($file in $zipFiles) {
-            Write-Info "Uploading $($file.Name)..."
-            gh release upload $TagName $file.FullName --clobber
-            if ($LASTEXITCODE -eq 0) {
-                Write-OK "Uploaded $($file.Name)"
-            }
-            else {
-                Write-Err "Failed to upload $($file.Name)"
-            }
-        }
-    }
-    else {
-        Write-Info "Creating new Release: $TagName"
-        
-        # Create Release and upload all files
-        $fileArgs = $zipFiles | ForEach-Object { $_.FullName }
-        gh release create $TagName $fileArgs --title "Ron Tools $Version" --notes $Message
-        
-        if ($LASTEXITCODE -eq 0) {
-            Write-OK "Release created successfully"
-        }
-        else {
-            Write-Err "Failed to create Release"
-        }
-    }
-}
-else {
-    Write-Step "5/7" "Skipping GitHub Release..."
-    Write-Info "Using direct link mode"
-}
-
-# Step 6: Generate index.html
-Write-Step "6/7" "Generating download page..."
+# Step 5: Build tools data and generate index.html FIRST
+Write-Step "5/7" "Generating download page..."
 
 # Ensure docs directory exists
 if (-not (Test-Path $DocsDir)) {
@@ -202,17 +149,12 @@ foreach ($file in $zipFiles) {
     
     # Get tool info from config
     $toolInfo = $null
-    if ($toolsConfig.tools -and $toolsConfig.tools.PSObject.Properties[$baseName]) {
+    if ($toolsConfig -and $toolsConfig.tools -and $toolsConfig.tools.PSObject.Properties[$baseName]) {
         $toolInfo = $toolsConfig.tools.$baseName
     }
     
-    # Determine download URL
-    if (-not $SkipRelease -and $hasGhCli) {
-        $downloadUrl = "https://github.com/$RepoOwner/$RepoName/releases/download/$TagName/$($file.Name)"
-    }
-    else {
-        $downloadUrl = "https://raw.githubusercontent.com/$RepoOwner/$RepoName/main/File/$($file.Name)"
-    }
+    # Download URL - use Release URL
+    $downloadUrl = "https://github.com/$RepoOwner/$RepoName/releases/download/$TagName/$($file.Name)"
     
     $toolName = $baseName
     $toolDesc = "Tool program"
@@ -248,12 +190,12 @@ if ($toolsDataArray.Count -eq 1) {
     $toolsJson = "[$toolsJson]"
 }
 
-# Replace toolsData array
+# Replace toolsData array - use regex to match the entire array
 $htmlContent = $htmlContent -replace 'const toolsData = \[.*?\];', "const toolsData = $toolsJson;"
 
 # Update year
 $currentYear = Get-Date -Format "yyyy"
-$htmlContent = $htmlContent -replace [regex]::Escape("2024"), $currentYear
+$htmlContent = $htmlContent -replace '2024', $currentYear
 
 # Write updated HTML
 [System.IO.File]::WriteAllText($IndexHtmlPath, $htmlContent, [System.Text.Encoding]::UTF8)
@@ -270,9 +212,8 @@ foreach ($tool in $toolsDataArray) {
     Write-Host "v$($tool.version)" -ForegroundColor DarkGray
 }
 
-# Step 7: Git operations
-Write-Host ""
-Write-Step "7/7" "Pushing to GitHub..."
+# Step 6: Git operations - MUST push before creating release
+Write-Step "6/7" "Pushing to GitHub..."
 
 Set-Location $ScriptDir
 
@@ -291,6 +232,60 @@ if ($LASTEXITCODE -eq 0) {
 }
 else {
     Write-Err "Push failed, check network or permissions"
+    exit 1
+}
+
+# Step 7: Create GitHub Release AFTER push
+if (-not $SkipRelease -and $hasGhCli) {
+    Write-Step "7/7" "Creating GitHub Release..."
+    
+    # Check if Release already exists
+    $null = gh release view $TagName 2>&1
+    
+    if ($LASTEXITCODE -eq 0) {
+        Write-Info "Release $TagName already exists, updating files..."
+        
+        # Delete old assets and upload new ones
+        foreach ($file in $zipFiles) {
+            gh release delete-asset $TagName $file.Name --yes 2>$null
+            Write-Info "Uploading $($file.Name)..."
+            gh release upload $TagName $file.FullName --clobber
+            if ($LASTEXITCODE -eq 0) {
+                Write-OK "Uploaded $($file.Name)"
+            }
+            else {
+                Write-Err "Failed to upload $($file.Name)"
+            }
+        }
+    }
+    else {
+        Write-Info "Creating new Release: $TagName"
+        
+        # Build file list for upload
+        $uploadFiles = @()
+        foreach ($file in $zipFiles) {
+            $uploadFiles += $file.FullName
+        }
+        
+        # Create Release and upload all files
+        $releaseCmd = "gh release create `"$TagName`" --title `"Ron Tools $Version`" --notes `"$Message`""
+        foreach ($f in $uploadFiles) {
+            $releaseCmd += " `"$f`""
+        }
+        
+        Invoke-Expression $releaseCmd
+        
+        if ($LASTEXITCODE -eq 0) {
+            Write-OK "Release created successfully"
+        }
+        else {
+            Write-Err "Failed to create Release"
+        }
+    }
+}
+else {
+    Write-Step "7/7" "Skipping GitHub Release..."
+    Write-Info "Release skipped"
 }
 
 # Complete
@@ -302,10 +297,6 @@ Write-Host ""
 Write-Host "  GitHub Releases:" -ForegroundColor Yellow
 Write-Host "     https://github.com/$RepoOwner/$RepoName/releases" -ForegroundColor Cyan
 Write-Host ""
-Write-Host "  Download Page (after enabling GitHub Pages):" -ForegroundColor Yellow
+Write-Host "  Download Page:" -ForegroundColor Yellow
 Write-Host "     https://$RepoOwner.github.io/$RepoName/" -ForegroundColor Cyan
-Write-Host ""
-Write-Host "  Tip: Go to GitHub Repository Settings > Pages" -ForegroundColor DarkGray
-Write-Host "       Select Source: Deploy from a branch" -ForegroundColor DarkGray
-Write-Host "       Select Branch: main, Folder: /docs" -ForegroundColor DarkGray
 Write-Host ""
