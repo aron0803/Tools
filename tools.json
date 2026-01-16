@@ -23,8 +23,8 @@
     },
     "LogitechSwitcher": {
       "name": "羅技設備切換器",
-      "description": "快速切換羅技鍵盤滑鼠到不同主機，支援系統托盤運行、全域快捷鍵 Ctrl+1/2/3 切換、開機自動啟動，一鍵切換所有 Easy-Switch 設備。",
-      "version": "1.2.2",
+      "description": "快速切換羅技鍵盤滑鼠到不同主機，支援系統托盤運行、全域快捷鍵 Ctrl+1/2/3 切換、暫停功能(可暫時停用切換)、開機自動啟動，一鍵切換所有 Easy-Switch 設備。",
+      "version": "1.3.0",
       "category": "系統工具"
     }
   }
