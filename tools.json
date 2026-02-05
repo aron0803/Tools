@@ -6,7 +6,7 @@
     "ScreenRecorder": {
       "name": "螢幕錄影工具",
       "description": "輕量級螢幕錄影程式，支援全螢幕/視窗錄製、截圖、音訊錄製，快速且穩定的錄影體驗。",
-      "version": "1.1.1",
+      "version": "1.1.0",
       "category": "多媒體"
     },
     "DontSleep": {
@@ -24,7 +24,7 @@
     "LogitechSwitcher": {
       "name": "羅技設備切換器",
       "description": "快速切換羅技鍵盤滑鼠到不同主機，支援系統托盤運行、全域快捷鍵 Ctrl+1/2/3 切換、暫停功能(可暫時停用切換)、開機自動啟動，一鍵切換所有 Easy-Switch 設備。",
-      "version": "1.3.0",
+      "version": "1.3.1",
       "category": "系統工具"
     }
   }
