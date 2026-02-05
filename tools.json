@@ -6,7 +6,7 @@
     "ScreenRecorder": {
       "name": "螢幕錄影工具",
       "description": "輕量級螢幕錄影程式，支援全螢幕/視窗錄製、截圖、音訊錄製，快速且穩定的錄影體驗。",
-      "version": "1.1.0",
+      "version": "1.1.1",
       "category": "多媒體"
     },
     "DontSleep": {
