@@ -26,6 +26,12 @@
       "description": "快速切換羅技鍵盤滑鼠到不同主機，支援系統托盤運行、全域快捷鍵 Ctrl+1/2/3 切換、暫停功能(可暫時停用切換)、開機自動啟動，一鍵切換所有 Easy-Switch 設備。",
       "version": "1.3.1",
       "category": "系統工具"
+    },
+    "CopyPathTool": {
+      "name": "Windows 右鍵選單工具",
+      "description": "極簡的 Windows 右鍵選單管理器。支援快速複製檔案路徑、在此處開啟 CMD/PowerShell，以及一鍵以 YOLO 模式在選定目錄啟動 Claude 互動式命令列工具，免管理員權限。",
+      "version": "1.1.0",
+      "category": "系統工具"
     }
   }
 }
