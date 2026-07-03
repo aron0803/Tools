@@ -30,7 +30,7 @@
     "CopyPathTool": {
       "name": "Windows 右鍵選單工具",
       "description": "極簡的 Windows 右鍵選單管理器。支援快速複製檔案路徑、在此處開啟 CMD/PowerShell，以及一鍵以 YOLO 模式在選定目錄啟動 Claude 互動式命令列工具，免管理員權限。",
-      "version": "1.1.2",
+      "version": "1.2.0",
       "category": "系統工具"
     }
   }
